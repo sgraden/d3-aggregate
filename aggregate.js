@@ -2,31 +2,36 @@
 
 $(document).ready(function() {
 
+	var columns = new Map();
+	var headerNames;
 	d3.csv("newTennisData.csv", function(error, tennis) {
 		if (error) {
 			return console.log(error);
 		}
-/*		tennis.forEach(function(d) { //Convert data to Numbers
+		//var columns = new Map();
+		headerNames = d3.keys(tennis[0]);
+		for(var i = 0; i < headerNames.length; i++) {
+			columns.set(headerNames[i], []);
+		}
+		console.log(columns);		
+		console.log(headerNames);
+		tennis.forEach(function(d) { //Convert data to Numbers
 			//console.log(d);
-			d.rank = +d.Rank;
-			d.wins = +d.Wins;
-			if (d.rank >= maxRank) {
-				maxRank = +d.rank;
+			console.log(typeof(d.Rank));
+			d.Rank = +d.Rank;
+			d.Wins = +d.Wins;
+			for(i = 0; i <headerNames.length; i++) {
+				columns.get(headerNames[i]).push(d[headerNames[i]]);
 			}
-			countMap(d);
+			
+			
 		});
-		rankEnd = maxRank;
-		winsMapArr = convertMapToArray(winsMap);
+				console.log(columns);		
 
-		ranges = [[0, maxRank], [0, maxWins]]; //Initialized after MaxRank/MaxWins started
-
-		createGraphAxis();
-		createSliders();
-
-		dataset = tennis;
-		drawVis(winsMapArr);*/
+		console.log(tennis);
+		console.log(sum(columns.get("Wins")));
 	});
-
+	
 }); 
 
 function sum (data){
