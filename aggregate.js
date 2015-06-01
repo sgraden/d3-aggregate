@@ -1,9 +1,5 @@
 "use strict";
 
-var max = 0;
-var min = 0;
-
-
 $(document).ready(function() {
 
 	d3.csv("newTennisData.csv", function(error, tennis) {
@@ -34,19 +30,30 @@ $(document).ready(function() {
 }); 
 
 function sum (data){
-
+	var sum = 0;
+	data.forEach(function(d) { //Convert data to Numbers
+			sum += d;
+	});
+	return sum;
 }
 
 function count(data) {
 	var counter = 0;
-data.forEach(function(d) { //Convert data to Numbers
-		counter++;
-		});
-return counter;
+	data.forEach(function(d) { //Convert data to Numbers
+			counter++;
+			});
+	return counter;
 }
 
 function average(data){
-
+	var sum = 0;
+	var count = 1;
+	data.forEach(function(d) { //Convert data to Numbers
+			sum += d;
+			count++;
+			});
+	var average = average/count;
+	return average;
 
 }
 
