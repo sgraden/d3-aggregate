@@ -58,12 +58,11 @@ function average(data){
 }
 
 function min(data){
-
-
+	return d3.min(data);
 }
 
 function max(data){
-
+	return d3.max(data);
 }
 
 function countMap (d) {
