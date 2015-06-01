@@ -33,26 +33,29 @@ $(document).ready(function() {
 
 }); 
 
-function sum (){
+function sum (data){
+
+}
+
+function count(data) {
+	var counter = 0;
+data.forEach(function(d) { //Convert data to Numbers
+		counter++;
+		});
+return counter;
+}
+
+function average(data){
 
 
 }
 
-function count() {
-
-}
-
-function average(){
+function min(data){
 
 
 }
 
-function min(){
-
-
-}
-
-function max(){
+function max(data){
 
 }
 
