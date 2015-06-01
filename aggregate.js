@@ -52,7 +52,7 @@ function average(data){
 			sum += d;
 			count++;
 			});
-	var average = average/count;
+	var average = sum/count;
 	return average;
 
 }
