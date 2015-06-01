@@ -1,13 +1,25 @@
-/// <reference path="typings/d3/d3.d.ts"/>
-/**
- * X = Rank (expand x axis on change)
- * Y = Total wins (grouped by Surface)
- * Slider 1 = # wins
- * Slider 2 = Rank
- * Dropdown = Gender
- * Dropdown = Surface
- */
+function sum (){
 
+
+}
+
+function count() {
+
+}
+
+function average(){
+
+
+}
+
+function min(){
+
+
+}
+
+function max(){
+	
+}
 "use strict";
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50};
