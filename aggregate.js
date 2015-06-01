@@ -1,5 +1,9 @@
 "use strict";
 
+var max = 0;
+var min = 0;
+
+
 $(document).ready(function() {
 
 	d3.csv("newTennisData.csv", function(error, tennis) {
@@ -26,16 +30,7 @@ $(document).ready(function() {
 		dataset = tennis;
 		drawVis(winsMapArr);*/
 	});
-/*	$("#surfaceSelect").change(function(){ 
-		var value = $('#surfaceSelect').val();  
-		currentSurface = value;                      
-		filterData();                  
-	});
-	$("#genderSelect").change(function(){                   
-		var value = $('#genderSelect').val(); 
-		currentGender = value;                       
-		filterData();                  
-	});*/
+
 }); 
 
 function sum (){
@@ -97,43 +92,6 @@ function convertMapToArray(map) {
 	return arr;
 }
 
-// "use strict";
-
-// var margin = {top: 20, right: 20, bottom: 30, left: 50};
-// var w = 640 - margin.left - margin.right;
-// var h = 480 - margin.top - margin.bottom;
-
-// var col = d3.scale.category10();
-
-// var col2 = d3.scale.linear()
-// 	.domain([0, 1000])
-// 	.range(["white", "black"]);
-
-// var svg = d3.select("#graph").append("svg")
-// 	.attr("width", w + margin.left + margin.right)
-// 	.attr("height", h + margin.top + margin.bottom)
-// .append("g")
-// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// var maxWins = 0; //Global store for wins
-// var maxRank = 0; //Global store for rank
-
-// var winsMap    = new Map();
-// var winsMapArr = [];
-
-// var format     = d3.time.format("%b %Y");
-
-// var attributes = ["Rank", "Wins"];
-// var ranges; // format = [[minRank, maxRank], [minWins, MaxWins]]
-
-// var dataset;
-// var winsBegin  = 0;
-// var winsEnd    = maxWins;
-// var rankBegin  = 0;
-// var rankEnd    = maxRank;
-
-// var currentSurface = "all";
-// var currentGender = "all";
 	
 
 
