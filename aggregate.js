@@ -17,7 +17,7 @@ $(document).ready(function() {
 		console.log(headerNames);
 		tennis.forEach(function(d) { //Convert data to Numbers
 			//console.log(d);
-			console.log(typeof(d.Rank));
+			//.console.log(typeof(d.Rank));
 			d.Rank = +d.Rank;
 			d.Wins = +d.Wins;
 			for(i = 0; i <headerNames.length; i++) {
@@ -33,6 +33,38 @@ $(document).ready(function() {
 	});
 	
 }); 
+
+function getColumns(fileName) {
+	var columns = new Map();
+	d3.csv(fileName, function(error, tennis) {
+		if (error) {
+			return console.log(error);
+		}
+		//var columns = new Map();
+		var headerNames = d3.keys(tennis[0]);
+		for(var i = 0; i < headerNames.length; i++) {
+			columns.set(headerNames[i], []);
+		}
+		console.log(columns);		
+		console.log(headerNames);
+		tennis.forEach(function(d) { //Convert data to Numbers
+			//console.log(d);
+			console.log(typeof(d.Rank));
+			d.Rank = +d.Rank;
+			d.Wins = +d.Wins;
+			for(i = 0; i <headerNames.length; i++) {
+				columns.get(headerNames[i]).push(d[headerNames[i]]);
+			}
+			
+			
+		});
+				console.log(columns);		
+
+		console.log(tennis);
+		console.log(sum(columns.get("Wins")));
+	});
+	return columns;
+}
 
 function sum (data){
 	var sum = 0;
