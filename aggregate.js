@@ -57,6 +57,7 @@ function getColumns(fileName, column1, column2, choice) {
 			var average = 1;
 			var min = 0;
 			var max = 0;
+			var agg = 0;
 			for(i = 0; i <headerNames.length; i++) {
 				//columns.get(headerNames[i]).push(d[headerNames[i]]);
 				var value = d[headerNames[i]];
@@ -65,11 +66,11 @@ function getColumns(fileName, column1, column2, choice) {
 					count++;
 					sum += aggMap.get(column1);
 					if (choice == "sum" && value == "column2"){
-						
+						agg = sum;
 					} else if (choice == "count" && value == "column2"){
-						//count++;
+						agg = count;
 					} else if (choice == "average" && value == "column2"){
-						average = sum / count;
+						agg = sum / count;
 					} else if (choice == "min" && value == "column2") {
 
 					} else if (choice == "max" && value == "column2"){
@@ -77,11 +78,13 @@ function getColumns(fileName, column1, column2, choice) {
 					}
 
 					aggMap.set(d[column1], {
+						choice: agg,
 						headerNames[i]: value,
 					})
 
 				} else {
 					aggMap.set(d[column1], {
+						choice: agg,
 						headerNames[i]: value,
 					})
 				}
