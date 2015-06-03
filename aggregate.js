@@ -1,10 +1,11 @@
 "use strict";
-
+var aggMap = new Map();
 $(document).ready(function() {
 
 	var columns = new Map();
 	var headerNames;
-	d3.csv("newTennisData.csv", function(error, tennis) {
+	console.log(getColumns("newTennisData.csv"));
+	/*d3.csv("newTennisData.csv", function(error, tennis) {
 		if (error) {
 			return console.log(error);
 		}
@@ -13,8 +14,8 @@ $(document).ready(function() {
 		for(var i = 0; i < headerNames.length; i++) {
 			columns.set(headerNames[i], []);
 		}
-		console.log(columns);		
-		console.log(headerNames);
+		//console.log(columns);		
+		//console.log(headerNames);
 		tennis.forEach(function(d) { //Convert data to Numbers
 			//console.log(d);
 			//.console.log(typeof(d.Rank));
@@ -26,15 +27,16 @@ $(document).ready(function() {
 			
 			
 		});
-				console.log(columns);		
+		/*console.log(columns);		
 
 		console.log(tennis);
-		console.log(sum(columns.get("Wins")));
-	});
+		console.log(sum(columns.get("Wins"))); 
+	}); */
 	
 }); 
 
-function getColumns(fileName) {
+//Have user define the file and the aggregate choice 
+function getColumns(fileName, column1, column2, choice) {
 	var columns = new Map();
 	d3.csv(fileName, function(error, tennis) {
 		if (error) {
@@ -45,24 +47,36 @@ function getColumns(fileName) {
 		for(var i = 0; i < headerNames.length; i++) {
 			columns.set(headerNames[i], []);
 		}
-		console.log(columns);		
-		console.log(headerNames);
+		//console.log(columns);		
+		//console.log(headerNames);
 		tennis.forEach(function(d) { //Convert data to Numbers
 			//console.log(d);
+
+			if (choice == "sum"){
+
+			} else if (choice == "count"){
+
+			} else if (choice == "average"){
+
+			} else if (choice == "min") {
+
+			} else if (choice == "max"){
+
+			}
 			console.log(typeof(d.Rank));
 			d.Rank = +d.Rank;
 			d.Wins = +d.Wins;
 			for(i = 0; i <headerNames.length; i++) {
 				columns.get(headerNames[i]).push(d[headerNames[i]]);
 			}
-			
-			
+			addToMap(d, column1, column2, choice);
 		});
-				console.log(columns);		
+		/*console.log(columns);		
 
 		console.log(tennis);
-		console.log(sum(columns.get("Wins")));
+		console.log(sum(columns.get("Wins"))); */
 	});
+
 	return columns;
 }
 
@@ -102,9 +116,10 @@ function max(data){
 	return d3.max(data);
 }
 
-function countMap (d) {
-	if (winsMap.has(d.Name)) { //if it has the name, increment
-		winsMap.set(d.Name, 
+function addToMap (d, column1, column2, choice) {
+
+	if (aggMap.has(column1)) { //if it has the name, increment
+		aggMap.set(d.Name, 
 			{
 				Name: d.Name,
 				Surface: "All",
@@ -114,7 +129,7 @@ function countMap (d) {
 			}
 		);
 	} else { //insert the name
-		winsMap.set(d.Name, 
+		aggMap.set(d.Name, 
 			{
 				Name: d.Name,
 				Surface: "All",
