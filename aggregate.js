@@ -52,29 +52,44 @@ function getColumns(fileName, column1, column2, choice) {
 		tennis.forEach(function(d) { //Convert data to Numbers
 			//console.log(d);
 
-			if (choice == "sum"){
-
-			} else if (choice == "count"){
-
-			} else if (choice == "average"){
-
-			} else if (choice == "min") {
-
-			} else if (choice == "max"){
-
-			}
-			console.log(typeof(d.Rank));
-			d.Rank = +d.Rank;
-			d.Wins = +d.Wins;
+			var count = 0;
+			var sum = 0;
+			var average = 1;
+			var min = 0;
+			var max = 0;
 			for(i = 0; i <headerNames.length; i++) {
-				columns.get(headerNames[i]).push(d[headerNames[i]]);
-			}
-			addToMap(d, column1, column2, choice);
-		});
-		/*console.log(columns);		
+				//columns.get(headerNames[i]).push(d[headerNames[i]]);
+				var value = d[headerNames[i]];
 
-		console.log(tennis);
-		console.log(sum(columns.get("Wins"))); */
+				if(aggMap.has(column1)){
+					count++;
+					sum += aggMap.get(column1);
+					if (choice == "sum" && value == "column2"){
+						
+					} else if (choice == "count" && value == "column2"){
+						//count++;
+					} else if (choice == "average" && value == "column2"){
+						average = sum / count;
+					} else if (choice == "min" && value == "column2") {
+
+					} else if (choice == "max" && value == "column2"){
+
+					}
+
+					aggMap.set(d[column1], {
+						headerNames[i]: value,
+					})
+
+				} else {
+					aggMap.set(d[column1], {
+						headerNames[i]: value,
+					})
+				}
+
+				
+			}
+			//addToMap(d, column1, column2, choice);
+		});
 	});
 
 	return columns;
