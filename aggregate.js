@@ -1,39 +1,20 @@
 "use strict";
-var aggMap = new Map();
-$(document).ready(function() {
+window.Agg = (function () {
+	function Agg () {
+	}
+		    
+	var agg = {
+		avg: function(data, col1, col2) {
+			var avgData = [];
 
-	var columns = new Map();
-	var headerNames;
-	console.log(getColumns("newTennisData.csv"));
-	/*d3.csv("newTennisData.csv", function(error, tennis) {
-		if (error) {
-			return console.log(error);
-		}
-		//var columns = new Map();
-		headerNames = d3.keys(tennis[0]);
-		for(var i = 0; i < headerNames.length; i++) {
-			columns.set(headerNames[i], []);
-		}
-		//console.log(columns);		
-		//console.log(headerNames);
-		tennis.forEach(function(d) { //Convert data to Numbers
-			//console.log(d);
-			//.console.log(typeof(d.Rank));
-			d.Rank = +d.Rank;
-			d.Wins = +d.Wins;
-			for(i = 0; i <headerNames.length; i++) {
-				columns.get(headerNames[i]).push(d[headerNames[i]]);
-			}
 			
-			
-		});
-		/*console.log(columns);		
+			data.forEach(function (d) {
 
-		console.log(tennis);
-		console.log(sum(columns.get("Wins"))); 
-	}); */
-	
-}); 
+			});
+		}
+	};
+   return agg;
+}());
 
 //Have user define the file and the aggregate choice 
 function getColumns(fileName, column1, column2, choice) {
@@ -79,13 +60,13 @@ function getColumns(fileName, column1, column2, choice) {
 
 					aggMap.set(d[column1], {
 						choice: agg,
-						headerNames[i]: value,
+						headerNames: value,
 					})
 
 				} else {
 					aggMap.set(d[column1], {
 						choice: agg,
-						headerNames[i]: value,
+						headerNames: value,
 					})
 				}
 
