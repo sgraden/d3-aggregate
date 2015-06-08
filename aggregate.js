@@ -18,16 +18,22 @@ window.Agg = (function () {
 				console.log(value);
 				var rData = [];
 				if(aggMap.has(value)){
-					count++;
+					
 					console.log(aggMap.get(value));
 					console.log(d);
 					//console.log("here");
-					//sum += aggMap.get(col1).col2;
-					//agg1 = sum / count;
 					var column = keys[i];
 					var update = aggMap.get(value);
+					update["count"]++;
+					var count = update["count"];
+
+					sum = aggMap.get(value).agg + +d[col2];
+					console.log(aggMap.get(value).agg + " " + d[col2]);
+					agg1 = sum / count;
+					console.log(sum + " " + count);
 					update["agg"] = agg1;
-					aggMap.set(d[col1], update);
+
+					aggMap.set(value, update);
 				
 
 				} else {
@@ -35,8 +41,8 @@ window.Agg = (function () {
 						var column = keys[i];					
 						rData[keys[i]] = d[keys[i]];
 					}
-					rData["agg"] = 0;
-					console.log("inside");
+					rData["agg"] = +d[col2];
+					rData["count"] = 1;
 					aggMap.set(d[col1], rData);
 				}
 
