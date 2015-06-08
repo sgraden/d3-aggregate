@@ -12,15 +12,11 @@ window.Agg = (function () {
 			console.log(keys);
 			var agg1 = 0;
 			var aggMap = new Map();
-			var trackMap = new Map();
-			/*for(var i = 0; i < keys.length; i++) {
-				aggMap.set(keys[i], []);
-			}*/
-
 			
 			data.forEach(function (d) {
 				var value = d[col1];
 				console.log(value);
+				var rData = [];
 				if(aggMap.has(value)){
 					count++;
 					console.log(aggMap.get(value));
@@ -28,18 +24,26 @@ window.Agg = (function () {
 					//console.log("here");
 					//sum += aggMap.get(col1).col2;
 					//agg1 = sum / count;
-					aggMap.set(d[col1], {
-						choice: agg1,
-						col2: +d[col2],
-					})
+					var column = keys[i];
+					var update = aggMap.get(value);
+					update["agg"] = agg1;
+					aggMap.set(d[col1], update);
+				
 
 				} else {
+					for(var i = 0; i <keys.length; i++) {
+						var column = keys[i];					
+						rData[keys[i]] = d[keys[i]];
+					}
+					rData["agg"] = 0;
 					console.log("inside");
-					aggMap.set(d[col1], {
-						choice: agg1,
-						col2: +d[col2],
-					})
+					aggMap.set(d[col1], rData);
 				}
+
+
+				
+
+				
  					//console.log(aggMap.get(d[col1]));
 			});
 		}
