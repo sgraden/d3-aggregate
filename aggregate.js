@@ -6,10 +6,41 @@ window.Agg = (function () {
 	var agg = {
 		avg: function(data, col1, col2) {
 			var avgData = [];
+			var sum = 0;
+			var count = 0;
+			var keys = Object.keys(data[0]);
+			console.log(keys);
+			var agg1 = 0;
+			var aggMap = new Map();
+			var trackMap = new Map();
+			/*for(var i = 0; i < keys.length; i++) {
+				aggMap.set(keys[i], []);
+			}*/
 
 			
 			data.forEach(function (d) {
+				var value = d[col1];
+				console.log(value);
+				if(aggMap.has(value)){
+					count++;
+					console.log(aggMap.get(value));
+					console.log(d);
+					//console.log("here");
+					//sum += aggMap.get(col1).col2;
+					//agg1 = sum / count;
+					aggMap.set(d[col1], {
+						choice: agg1,
+						col2: +d[col2],
+					})
 
+				} else {
+					console.log("inside");
+					aggMap.set(d[col1], {
+						choice: agg1,
+						col2: +d[col2],
+					})
+				}
+ 					//console.log(aggMap.get(d[col1]));
 			});
 		}
 	};

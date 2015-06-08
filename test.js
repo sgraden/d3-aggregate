@@ -19,7 +19,7 @@
 			// });
 			var d = "Name";
 			console.log(tennis[0].d);
-			Agg.avg(tennis);
+			console.log(Agg.avg(tennis, "Name", "Wins"));
 		});
 
 	});
