@@ -18,8 +18,10 @@
 			// tennis.forEach(function(d) { //Convert data to Numbers
 			// });
 			var d = "Name";
+			console.log(tennis);
 			//console.log(tennis[0].d);
-			console.log(Agg.avg(tennis, "Name", "Surface", "Wins"));
+			//console.log(Agg.count(tennis, "Name"));
+			console.log(Agg.avg(tennis, "Name", "Wins"));
 		});
 
 	});
