@@ -7,19 +7,71 @@ window.Agg = (function () {
 		avg: function(data, col1, col2, col3) {
 			
 			var counter = 0;
+			var aggMap = aggregate(data, col1, col2, col3, "avg");
+			console.log(aggregate(data, col1, col2, col3, "avg"));
+			var objectArray = [];
+			console.log(aggMap);
+			//console.log(aggMap);
+			for (var m in aggMap){
+			    for (var i=0;i<aggMap[m].length;i++){
+			    	console.log(aggMap[m][i]);
+			    }
+			} 
+			console.log(objectArray.length);
+			return objectArray;
+		}
+
+		sum: function(data, col1, col2, col3) {
+			
+			var counter = 0;
+			var aggMap = aggregate(data, col1, col2, col3, "sum");
+			console.log(aggregate(data, col1, col2, col3, "sum"));
+			var objectArray = [];
+			console.log(aggMap);
+			//console.log(aggMap);
+			for (var m in aggMap){
+			    for (var i=0;i<aggMap[m].length;i++){
+			    	console.log(aggMap[m][i]);
+			    }
+			} 
+			console.log(objectArray.length);
+			return objectArray;
+		}
+
+		max: function(data, col1, col2, col3) {
+			
+			var counter = 0;
 			var aggMap = aggregate(data, col1, col2, col3);
 			console.log(aggregate(data, col1, col2, col3));
 			var objectArray = [];
-			
+			console.log(aggMap);
 			//console.log(aggMap);
-			for (var k in aggMap) {
-				console.log("hello");
-				var obj = toObject(aggMap[k]);
-				objectArray.push(obj);			 
+			for (var m in aggMap){
+			    for (var i=0;i<aggMap[m].length;i++){
+			    	console.log(aggMap[m][i]);
+			    }
 			} 
-
+			console.log(objectArray.length);
 			return objectArray;
 		}
+
+		min: function(data, col1, col2, col3) {
+			
+			var counter = 0;
+			var aggMap = aggregate(data, col1, col2, col3);
+			console.log(aggregate(data, col1, col2, col3));
+			var objectArray = [];
+			console.log(aggMap);
+			//console.log(aggMap);
+			for (var m in aggMap){
+			    for (var i=0;i<aggMap[m].length;i++){
+			    	console.log(aggMap[m][i]);
+			    }
+			} 
+			console.log(objectArray.length);
+			return objectArray;
+		}
+
 	};
    return agg;
 }());
@@ -32,7 +84,7 @@ function toObject(arr) {
   return rv;
 }
 
-function aggregate(data, col1, col2, col3) {
+function aggregate(data, col1, col2, col3, choice) {
 	var avgData = [];
 	var sum = 0;
 	var count = 0;
@@ -57,7 +109,19 @@ function aggregate(data, col1, col2, col3) {
 
 			sum = aggMap.get(value).agg + +d[col3];
 			//console.log(aggMap.get(value).agg + " " + d[col2]);
-			agg1 = sum / count;
+			
+			if (choice = "avg"){
+				agg1 = sum / count;
+			} else if (choice = "sum") {
+				agg1 = sum;
+			} else if (choice = "max"){
+
+			} else if (choice = "min"){
+
+			}
+
+			
+
 			//console.log(sum + " " + count);
 			update["agg"] = agg1;
 
