@@ -4,7 +4,7 @@
 	$(document).ready(function () {
 
 		d3.csv("newTennisData.csv", function(error, tennis) {
-			console.log(tennis);
+			//console.log(tennis);
 			if (error) {
 				return console.log(error);
 			}
@@ -18,8 +18,8 @@
 			// tennis.forEach(function(d) { //Convert data to Numbers
 			// });
 			var d = "Name";
-			console.log(tennis[0].d);
-			console.log(Agg.avg(tennis, "Name", "Wins"));
+			//console.log(tennis[0].d);
+			console.log(Agg.avg(tennis, "Name", "Surface", "Wins"));
 		});
 
 	});

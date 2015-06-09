@@ -4,33 +4,33 @@ window.Agg = (function () {
 	}
 		    
 	var agg = {
-		avg: function(data, col1, col2) {
+		avg: function(data, col1, col2, col3) {
 			var avgData = [];
 			var sum = 0;
 			var count = 0;
 			var keys = Object.keys(data[0]);
-			console.log(keys);
+			//console.log(keys);
 			var agg1 = 0;
 			var aggMap = new Map();
-			
+			var objectArray = [];
 			data.forEach(function (d) {
-				var value = d[col1];
-				console.log(value);
+				var value = d[col1] + " " + d[col2];
+				//console.log(value);
 				var rData = [];
 				if(aggMap.has(value)){
 					
-					console.log(aggMap.get(value));
-					console.log(d);
+					//console.log(aggMap.get(value));
+					//console.log(d);
 					//console.log("here");
 					var column = keys[i];
 					var update = aggMap.get(value);
 					update["count"]++;
 					var count = update["count"];
 
-					sum = aggMap.get(value).agg + +d[col2];
-					console.log(aggMap.get(value).agg + " " + d[col2]);
+					sum = aggMap.get(value).agg + +d[col3];
+					//console.log(aggMap.get(value).agg + " " + d[col2]);
 					agg1 = sum / count;
-					console.log(sum + " " + count);
+					//console.log(sum + " " + count);
 					update["agg"] = agg1;
 
 					aggMap.set(value, update);
@@ -41,21 +41,40 @@ window.Agg = (function () {
 						var column = keys[i];					
 						rData[keys[i]] = d[keys[i]];
 					}
-					rData["agg"] = +d[col2];
+					rData["agg"] = +d[col3];
 					rData["count"] = 1;
-					aggMap.set(d[col1], rData);
+					aggMap.set(d[col1] + " " + d[col2], rData);
 				}
-
-
-				
-
-				
+	
  					//console.log(aggMap.get(d[col1]));
 			});
+			var counter = 0;
+			console.log(aggMap);
+			for (var k in aggMap) {
+				console.log("hello");
+				/*var obj = toObject(aggMap[k]);
+				objectArray[counter] = obj;
+				console.log("test");
+			  //objectArray[counter] = aggMap.get(k);
+			  
+			  counter++; */
+			}
+
+
+
+			return objectArray;
 		}
 	};
    return agg;
 }());
+
+
+function toObject(arr) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    rv[i] = arr[i];
+  return rv;
+}
 
 //Have user define the file and the aggregate choice 
 function getColumns(fileName, column1, column2, choice) {
