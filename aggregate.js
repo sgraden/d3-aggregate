@@ -7,41 +7,66 @@ window.Agg = (function () {
 		/*
 			Groups by all columns and averages the last column provided.
 		 */
-		avg: function(data, col1, col2) {
+		avg: function(data, avgCol, group) {
 			console.log("avging");
-			var avgMap = this.sum(data, col1, col2);
-			var countMap = this.count(data, col1); //Should contain same keys as avg
-
+			var avgMap = this.sum(data, avgCol, group);
+			var countMap = this.count(data, group, true); //Should contain same keys as avg
 			var avgMapKeys = avgMap.keys();
+			var retArr = [];
 			for (var currKey of avgMap.keys()) {
-				var count = countMap.get(currKey.toLowerCase()); //Compare to lower case in count/avg
+				var count = countMap.get(currKey); //Compare to lower case in count/avg
 				var sum = avgMap.get(currKey);
-				var avg = {name: currKey, avg: sum / count};
-				avgMap.set(currKey, avg);
+				var obj = {};
+				var keySplit = currKey.split("_");
+				for (var i = 0; i < group.length; i++) {
+
+					obj[group[i]] = keySplit[i];
+				}
+				obj["Avg. " + avgCol] = parseInt(sum) / parseInt(count);
+				retArr.push(obj);
+				//var avg = {name: currKey, avg: parseInt(sum) / parseInt(count)};
+				//avgMap.set(currKey, avg);
 			}
-			console.log(avgMap);
-			var objArray = [];
-			for (var key of avgMap.keys()) {
-				objArray.push(avgMap.get(key));
-			}
-			console.log(objArray);
-			return objArray;//convertMapToArray(avgMap);
+			//console.log(objArray);
+			return retArr;//convertMapToArray(avgMap);
 		},
 
-		sum: function(data, col1, col2) {
+		sum: function(data, sumCol, group, internal) {
 			//console.log("summing");
+
 			var map = new Map();
 			for (var i = 0; i < data.length; i++) {
 				var row = data[i];
-				var rowCol1 = row[col1];
-				if (map.has(rowCol1)) {
-					var currVal = map.get(rowCol1);
+				var key = row[group[0]];
+				for(var j = 1; j < group.length; j++){
+					key += "_" + row[group[j]];
+				}
+
+				if (map.has(key)) {
+					var currVal = map.get(key);
 					//console.log(currVal);
-					map.set(rowCol1, parseInt(currVal) + parseInt(row[col2]));
+					map.set(key, currVal + parseInt(row[sumCol]));
 				} else {
-					map.set(rowCol1, row[col2]);
+					map.set(key, parseInt(row[sumCol]));
 				}
 			} 
+
+			var objArr = [];
+			for (var currKey of map.keys()) {
+				var obj = {};
+				var keySplit = currKey.split("_");
+				for (var i = 0; i < group.length; i++) {
+					obj[group[i]] = keySplit[i];
+				}
+				obj["Sum"] = parseInt(map.get(currKey));
+				objArr.push(obj);
+			}
+			if (internal) {
+				return map;
+			} else {
+				return objArr;
+			}
+
 			return map;
 		},
 
@@ -82,6 +107,19 @@ window.Agg = (function () {
 			return objectArray;
 		},
 
+
+		//Probably revmove this function by the end. It is just for us!
+		review: function(data, col1, col2, value) {
+			var map = [];
+
+			for (var i = 0; i < data.length; i++) {
+				if (data[i][col1] == value) {
+					map.push(data[i][col2]);
+				}
+			}
+			return map;
+		},
+
 		/**
 		 * Function that searches through and combines the given data based
 		 * on the column to pay attention to and, if given, the exact value the user
@@ -92,20 +130,16 @@ window.Agg = (function () {
 		 * @param  String 			values 	Not mandatory. A specific value the ge the count for
 		 * @return Int or Array[objects]
 		 */
-		count: function (data, group, value) {
+		count: function (data, group, internal) {
 			console.log("counting");
-			var findVal = value ? true : false; //If specific value was passed or not
 			var map = new Map(); //Map of col1 to total counts
 			var size = group.length;
 			//var singleCount = 0; //Count for the single value passed 
 			for (var i = 0; i < data.length; i++) {
 				var row = data[i];
-				/*if (findVal && row[col1] == value) {
-					singleCount++;
-				} else {*/
 				var key = row[group[0]];
 				for (var j = 1; j < size; j++){
-					var rowVal = row[group[j]].toLowerCase(); //Helps with caps
+					var rowVal = row[group[j]]; //Helps with caps
 					key += ("_" + rowVal);				
 				}
 				if (map.has(key)) {
@@ -114,13 +148,23 @@ window.Agg = (function () {
 				} else {
 					map.set(key, 1);
 				}		
-				
-				//}
 			}
-			if (findVal) {
-				return map.get(value.toLowerCase()); //Compare the lower case val
-			} else {
+
+			//Convert to array of objects
+			var objArr = [];
+			for (var currKey of map.keys()) {
+				var obj = {};
+				var keySplit = currKey.split("_");
+				for (var i = 0; i < group.length; i++) {
+					obj[group[i]] = keySplit[i];
+				}
+				obj["Count"] = parseInt(map.get(currKey));
+				objArr.push(obj);
+			}
+			if (internal) {
 				return map;
+			} else {
+				return objArr;
 			}
 		}
 
