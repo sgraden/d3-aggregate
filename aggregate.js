@@ -92,23 +92,29 @@ window.Agg = (function () {
 		 * @param  String 			values 	Not mandatory. A specific value the ge the count for
 		 * @return Int or Array[objects]
 		 */
-		count: function (data, col1, value) {
+		count: function (data, group, value) {
 			console.log("counting");
 			var findVal = value ? true : false; //If specific value was passed or not
 			var map = new Map(); //Map of col1 to total counts
+			var size = group.length;
 			//var singleCount = 0; //Count for the single value passed 
 			for (var i = 0; i < data.length; i++) {
 				var row = data[i];
 				/*if (findVal && row[col1] == value) {
 					singleCount++;
 				} else {*/
-				var rowVal = row[col1].toLowerCase(); //Helps with caps
-				if (map.has(rowVal)) {
-					var mapVal = map.get(rowVal);
-					map.set(rowVal, mapVal + 1);
-				} else {
-					map.set(rowVal, 1);
+				var key = row[group[0]];
+				for (var j = 1; j < size; j++){
+					var rowVal = row[group[j]].toLowerCase(); //Helps with caps
+					key += ("_" + rowVal);				
 				}
+				if (map.has(key)) {
+					var mapVal = map.get(key);
+					map.set(key, mapVal + 1);
+				} else {
+					map.set(key, 1);
+				}		
+				
 				//}
 			}
 			if (findVal) {
