@@ -16,7 +16,8 @@ window.Agg = (function () {
 			for (var currKey of avgMap.keys()) {
 				var count = countMap.get(currKey.toLowerCase()); //Compare to lower case in count/avg
 				var sum = avgMap.get(currKey);
-				avgMap.set(currKey, sum / count);
+				var avg = {name: currKey, avg: sum / count};
+				avgMap.set(currKey, avg);
 			}
 			console.log(avgMap);
 			var objArray = [];
