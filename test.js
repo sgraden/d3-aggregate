@@ -15,7 +15,7 @@
 			console.log(Agg.count(tennis, "Name", "federer r.")); */
 			// console.log(Agg.review(tennis, "Winner", "WPts", "Matosevic M."));
 			console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
-			console.log(Agg.count(tennis, ["Winner"]));
+			console.log(Agg.max(tennis, "WPts", ["Winner"]));
 		});
 	});
 })();
