@@ -15,6 +15,5 @@
 			console.log(Agg.count(tennis, "Name", "federer r."));
 
 		});
-
 	});
 })();
