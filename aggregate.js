@@ -18,12 +18,17 @@ window.Agg = (function () {
 				var sum = avgMap.get(currKey);
 				avgMap.set(currKey, sum / count);
 			}
-
-			return avgMap;//convertMapToArray(avgMap);
+			console.log(avgMap);
+			var objArray = [];
+			for (var key of avgMap.keys()) {
+				objArray.push(avgMap.get(key));
+			}
+			console.log(objArray);
+			return objArray;//convertMapToArray(avgMap);
 		},
 
 		sum: function(data, col1, col2) {
-			console.log("summing");
+			//console.log("summing");
 			var map = new Map();
 			for (var i = 0; i < data.length; i++) {
 				var row = data[i];
@@ -52,7 +57,7 @@ window.Agg = (function () {
 			    	console.log(aggMap[m][i]);
 			    }
 			} 
-			console.log(objectArray.length);
+			//console.log(objectArray.length);
 			return objectArray;
 		},
 
@@ -69,7 +74,7 @@ window.Agg = (function () {
 			    	console.log(aggMap[m][i]);
 			    }
 			} 
-			console.log(objectArray.length);
+			//console.log(objectArray.length);
 			return objectArray;
 		},
 
