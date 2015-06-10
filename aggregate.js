@@ -40,7 +40,7 @@ window.Agg = (function () {
 		},
 
 		max: function(data, col1, col2, col3) {
-			
+			console.log("maxing");
 			var counter = 0;
 			var aggMap = aggregate(data, col1, col2, col3);
 			console.log(aggregate(data, col1, col2, col3));
@@ -56,8 +56,11 @@ window.Agg = (function () {
 			return objectArray;
 		},
 
+		/*
+		Return entire row for the min value found with the given column
+		 */
 		min: function(data, col1, col2, col3) {
-			
+			console.log("mining");
 			var counter = 0;
 			var aggMap = aggregate(data, col1, col2, col3);
 			console.log(aggregate(data, col1, col2, col3));
