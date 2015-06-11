@@ -144,7 +144,7 @@ window.Agg = (function () {
 
 				if (max && currVal < row[col]) {
 					map.set(key, parseInt(row[col]));
-				} else if (!max && corrVal > row[col]) { //If max == false
+				} else if (!max && currVal > row[col]) { //If max == false
 					map.set(key, parseInt(row[col]));
 				}
 			} else {
