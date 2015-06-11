@@ -19,6 +19,8 @@
 			console.log(Agg.count(tennis, ["Winner"]));
 			var winCount = Agg.count(tennis, ["Winner"]);
 			console.log(Agg.max(winCount, "Count", ["Winner"]));
+			console.log(Agg.rangeMax(tennis, "WRank", ["Winner"]));
+			console.log(Agg.sort(tennis, "WRank"));
 
 var margin = {top: 20, right: 20, bottom: 30, left: 70};
     var w = 960 - margin.left - margin.right;
@@ -84,6 +86,7 @@ svg.append("g")
 
 
 
+			
 		});
 	});
 })();
