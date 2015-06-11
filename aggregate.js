@@ -118,12 +118,22 @@ window.Agg = (function () {
 			return rangeMaxMin(data, minCol, group, false);
 		},
 
-		sort: function(data, sortCol, group) {
+		sortAscending: function(data, sortCol) {
 
-			var sortable = [];
-			for (var col in data)
-			      sortable.push([, maxSpeed[vehicle]])
-			sortable.sort(function(a, b) {return a[1] - b[1]})
+			data.sort(function(a,b) {
+    			return a[sortCol] - b[sortCol];
+			});
+			console.log("data");
+			return data;
+		},
+
+		sortDescending: function(data, sortCol) {
+
+		data.sort(function(a,b) {
+			return a[sortCol] - b[sortCol];
+		});
+		console.log("data");
+		return data;
 		},
 
 
@@ -158,10 +168,8 @@ window.Agg = (function () {
 				var currVal = map.get(key);
 				//console.log("curr: " + currVal);
 				if (max && currVal < row[col]) {
-					console.log("currVal: " + currVal + " " + row[col]);
 					map.set(key, parseInt(row[col]));
 					value = parseInt(row[col]);
-					console.log("val: " + value);
 				} else if (!max && currVal > row[col]) { //If max == false
 					map.set(key, parseInt(row[col]));
 

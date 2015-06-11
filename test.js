@@ -16,6 +16,7 @@
 			// console.log(Agg.review(tennis, "Winner", "WPts", "Matosevic M."));
 			console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
 			console.log(Agg.rangeMax(tennis, "WRank", ["Winner"]));
+			console.log(Agg.sort(tennis, "WRank"));
 		});
 	});
 })();
