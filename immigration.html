@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+  $(function() {
+		$("#slider").slider({
+			min: 1820,
+			max: 2000,
+			step: 10,
+			slide: function(event, ui) {
+				newData("" + ui.value);
+				$("#amount").val("year:" + ui.value);
+			}
+		});
+		$("#amount").val("year:" + $("#slider").slider("value"));
+	});
+  </script>
+</head>
+<style>
+
+body {
+  font: 11px sans-serif;
+}
+
+.axis line,
+.axis text {
+  font: 11px sans-serif;
+}
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#slider {
+	width: 500px;
+}
+
+</style>
+<body>
+<h1>Immigration Population By Region 1820 - 2000</h1>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="immigrationD3.js"></script>
+<div id="slider"></div>
+<p>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+
+
+
+</body>
+</html>
