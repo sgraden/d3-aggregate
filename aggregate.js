@@ -110,6 +110,22 @@ window.Agg = (function () {
 			return maxMin(data, minCol, group, false);
 		},
 
+		rangeMax: function (data, maxCol, group) {
+			return rangeMaxMin(data, maxCol, group, true);
+		},
+
+		rangeMin: function(data, minCol, group) {
+			return rangeMaxMin(data, minCol, group, false);
+		},
+
+		sort: function(data, sortCol, group) {
+
+			var sortable = [];
+			for (var col in data)
+			      sortable.push([, maxSpeed[vehicle]])
+			sortable.sort(function(a, b) {return a[1] - b[1]})
+		},
+
 
 		//Probably revmove this function by the end. It is just for us!
 		review: function(data, col1, col2, value) {
@@ -125,6 +141,41 @@ window.Agg = (function () {
 
 
 	};
+
+	function rangeMaxMin(data, col, group, max){
+		var map = new Map();
+		var value = 0;
+		for (var i = 0; i < data.length; i++) {
+			var row = data[i];
+			
+			var key = row[group[0]];
+			for(var j = 1; j < group.length; j++){
+				key += "_" + row[group[j]];
+			}
+
+
+			if (map.has(key)) {
+				var currVal = map.get(key);
+				//console.log("curr: " + currVal);
+				if (max && currVal < row[col]) {
+					console.log("currVal: " + currVal + " " + row[col]);
+					map.set(key, parseInt(row[col]));
+					value = parseInt(row[col]);
+					console.log("val: " + value);
+				} else if (!max && currVal > row[col]) { //If max == false
+					map.set(key, parseInt(row[col]));
+
+					value = parseInt(row[col]);
+				}
+			} else {
+				map.set(key, parseInt(row[col]));
+				value = parseInt(row[col]);
+			}
+		}
+
+		return value;
+
+	}
 
 
 	//Helper function for the Min and Max functions
@@ -151,6 +202,8 @@ window.Agg = (function () {
 				map.set(key, parseInt(row[col]));
 			}
 		}
+
+		map = map.sort();
 
 		var objArr = [];
 		for (var currKey of map.keys()) {
