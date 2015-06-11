@@ -123,17 +123,22 @@ window.Agg = (function () {
 			data.sort(function(a,b) {
     			return a[sortCol] - b[sortCol];
 			});
-			console.log("data");
 			return data;
 		},
 
 		sortDescending: function(data, sortCol) {
+			data.sort(function(a,b) {
+				return a[sortCol] - b[sortCol];
+			});
+			return data;
+		},
 
-		data.sort(function(a,b) {
-			return a[sortCol] - b[sortCol];
-		});
-		console.log("data");
-		return data;
+		take: function (data, limit) {
+			var copy = [];
+			for (var i = 0; i < limit; i++){
+				copy.push(data[i]);
+			}
+			return copy;
 		},
 
 
