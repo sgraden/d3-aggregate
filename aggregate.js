@@ -211,7 +211,6 @@ window.Agg = (function () {
 			}
 		}
 
-		map = map.sort();
 
 		var objArr = [];
 		for (var currKey of map.keys()) {
