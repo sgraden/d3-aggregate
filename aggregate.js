@@ -128,7 +128,7 @@ window.Agg = (function () {
 
 		sortDescending: function(data, sortCol) {
 			data.sort(function(a,b) {
-				return a[sortCol] - b[sortCol];
+				return b[sortCol] - a[sortCol];
 			});
 			return data;
 		},
