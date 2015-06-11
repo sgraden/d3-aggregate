@@ -51,7 +51,7 @@ dataset = immigrationData;
 	//console.log(function(d) {return y(d["1820"]);});
 	//var xPosition = x.(d["Region"]);}
 	//console.log(xPosition);
-	var circles = svg.selectAll("rect")
+	var rectangles = svg.selectAll("rect")
  .data(dataset)
  .enter()
  .append("rect")
