@@ -8,6 +8,29 @@
 			if (error) {
 				return console.log(error);
 			}
+
+			//Average the original list and group by the Winner name, the tournament, and the surface type
+			var avgPoints = Agg.avg(tennis, "WPts", ["Winner", "Tournament", "Surface"]);
+			/* 
+			Example:
+				Avg. WPts: 711
+				Surface: "Grass"
+				Tournament: "Australian Open"
+				Winner: "Ebden M."
+			*/
+			//Filter the dataset to only rows including "Hard" for surface type
+			var filteredAvg = Agg.filter(avgPoints, ["Surface"], ["Hard"]);
+			/* 
+			Example:
+				Avg. WPts: 1110
+				Surface: "Hard"
+				Tournament: "Australian Open"
+				Winner: "Mayer F."
+			*/
+			//Shrink the list to 10 and sort it Alphabetically by winner name
+			var sortedAvgSmall = Agg.sort(Agg.take(filteredAvg, 10), "Winner", "ASC");
+
+
 			console.log(tennis);
 			//console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
 			//console.log(Agg.max(tennis, "WPts", ["Winner"]));

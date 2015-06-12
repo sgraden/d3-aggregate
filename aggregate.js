@@ -211,18 +211,6 @@ window.Agg = (function () {
 			}
 
 			return filterData;
-		},
-
-		//Probably revmove this function by the end. It is just for us!
-		review: function(data, col1, col2, value) {
-			var map = [];
-
-			for (var i = 0; i < data.length; i++) {
-				if (data[i][col1] == value) {
-					map.push(data[i][col2]);
-				}
-			}
-			return map;
 		}
 	};
 
