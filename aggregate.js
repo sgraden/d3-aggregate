@@ -38,12 +38,12 @@ window.Agg = (function () {
 
 		/**
 		 * Loop through a dataset to calculate the sum for a given column. Provide
-		 * and array of column names to group the data by.
+		 * an array of column names to group the data by.
 		 * 
-		 * @param  {Array[object]} 	data   					Array of objects. Fields in objects are the columns from dataset
-		 * @param  {String} 		sumCol   				Column to sum
-		 * @param  {Array[String]} 	group  					An array of column names in the format of a string
-		 * @param  {Boolean} 								internal Whether the function is being called internally or not
+		 * @param  {Array[object]} 	data   			Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		sumCol  		Column to sum
+		 * @param  {Array[String]} 	group  			An array of column names in the format of a string
+		 * @param  {Boolean} 		internal 		Whether the function is being called internally or not
 		 * @return {Array[object] || map<String> = Sum}     Depending on if it is internal call or not, this function will return an Array of objects or a map
 		 */
 		sum: function(data, sumCol, group, internal) {
@@ -184,9 +184,9 @@ window.Agg = (function () {
 		 * Defaults to Descending
 		 * 
 		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
-		 * @param  {String} 		sortCol   
+		 * @param  {String} 		sortCol   	String of column name to sort by
 		 * @param  {String} 		direction 	Accepts "asc" to sort in an Ascending style or "desc" to sort Descending.
-		 * @return {Array[object]}           	Array of objects. Fields in objects are the columns from dataset
+		 * @return {Array[object]}           	Array of  sorted objects. Fields in objects are the columns from dataset
 		 */
 		sort: function(data, sortCol, direction) {
 			var dataCopy = data.slice(); //Creates a copy of the data
@@ -222,28 +222,30 @@ window.Agg = (function () {
 		},
 
 		/**
-		 * Sort the rows in the dataset based on a column and the direction you would like to sort by.
-		 * Works on number and strings.
-		 *
-		 * Defaults to Descending
+		 * Reduce the amount of rows in your dataset. Simply grabs the top rows of the dataset and returns a new array of them. If limit is greater than the length of data then will return original data.
 		 * 
 		 * @param  {Array[object]} 	data 	Array of objects. Fields in objects are the columns from dataset
 		 * @param  {Number} 		limit	The number of rows you want to keep.
 		 * @return {Array[object]} 			An array of objects. Fields in objects are the columns from dataset. Number of objects based on "limit"
 		 */ 
 		take: function (data, limit) {
-			var copy = [];
-			for (var i = 0; i < limit; i++){
-				copy.push(data[i]);
+			if (limit < data.length) {
+				var copy = [];
+				for (var i = 0; i < limit; i++){
+					copy.push(data[i]);
+				}
+				return copy;
+			} else { //IF the user asks for more rows then juest return the old array
+				return data;
 			}
-			return copy;
+			
 		},
 
 		/**
 		 * Loops through the dataset and searches for exact matching data between the filterCol and filerValue parameters.
 		 * Only keeps rows which meet all the filter values exactly.
 		 *
-		 * filterCol and filterValue need to match in column to value positioning within the array.
+		 * filterCol and filterValue need to match column to value positioning within the arrays.
 		 * 
 		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
 		 * @param  {Array[String]} filterCol   	Array of column names to match with the values
