@@ -192,6 +192,16 @@ window.Agg = (function () {
 			return copy;
 		},
 
+		filter: function (data, filterCol, filterValue){
+			var filterData = data;
+
+			for (var i = 0; i < data.length; i++) {
+				if (data[i][filterCol] == filterValue) {
+					filterData.push(data[filterCol]);
+				}
+			}
+			return filterData;
+		},
 
 		//Probably revmove this function by the end. It is just for us!
 		review: function(data, col1, col2, value) {
@@ -204,8 +214,6 @@ window.Agg = (function () {
 			}
 			return map;
 		}
-
-
 	};
 
 	//Helper function for the Min and Max functions
