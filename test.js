@@ -19,7 +19,7 @@
 			console.log(Agg.count(tennis, ["Winner"]));
 			var winCount = Agg.count(tennis, ["Winner", "Gender"]);
 			console.log(Agg.max(winCount, "Count", ["Winner"]));
-			console.log(Agg.rangeMax(tennis, "WRank", ["Winner"]));
+			console.log(Agg.range(tennis, "WRank", ["Winner"]));
 			console.log(Agg.sortDescending(tennis, "WRank"));
 			var sortedWinCount = Agg.sortDescending(winCount, "Count");
 			console.log(sortedWinCount);
