@@ -9,9 +9,9 @@
 				return console.log(error);
 			}
 			console.log(tennis);
-			console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
-			console.log(Agg.max(tennis, "WPts", ["Winner"]));
-			console.log(Agg.count(tennis, ["Winner"]));
+			//console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
+			//console.log(Agg.max(tennis, "WPts", ["Winner"]));
+			//console.log(Agg.count(tennis, ["Winner"]));
 
 			var winCount = Agg.count(tennis, ["Winner", "Gender"]);
 

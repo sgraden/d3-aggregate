@@ -6,7 +6,6 @@ window.Agg = (function () {
 	var agg = {
 
 		avg: function(data, avgCol, group) {
-			console.log("avging");
 			var avgMap = this.sum(data, avgCol, group, true);
 			var countMap = this.count(data, group, true); //Should contain same keys as avg
 			var avgMapKeys = avgMap.keys();
@@ -66,7 +65,6 @@ window.Agg = (function () {
 		},
 
 		count: function (data, group, internal) {
-			console.log("counting");
 			var map = new Map(); //Map of col1 to total counts
 			var size = group.length;
 			for (var i = 0; i < data.length; i++) {
@@ -196,8 +194,7 @@ window.Agg = (function () {
 			var filterData = data;
 
 			for (var i = 0; i < data.length; i++) {
-				console.log(data[i][filterCol]);
-				if (data[i]&& data[i][filterCol] && data[i][filterCol] == filterValue) {
+				if (data[i] && data[i][filterCol] && data[i][filterCol] == filterValue) {
 					filterData.push(data[filterCol]);
 				}
 			}
