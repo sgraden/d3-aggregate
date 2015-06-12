@@ -4,7 +4,16 @@ window.Agg = (function () {
 	}
 		    
 	var agg = {
-
+		/**
+		 * Loop through a dataset (Array of Objects with columns as fields) 
+		 * to calculate the average value for a column. Provide the other
+		 * columns to group by. Will return an Array of objects in the same layout as given
+		 * 
+		 * @param  {Array[object]} 	data   	Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		avgCol 	The column that will be averaged
+		 * @param  {Array[String]} 	group  	An array of column names in the format of a string
+		 * @return {Array[object]}  		An array of objects with the grouped and average column as fields.      
+		 */
 		avg: function(data, avgCol, group) {
 			var avgMap = this.sum(data, avgCol, group, true);
 			var countMap = this.count(data, group, true); //Should contain same keys as avg
@@ -27,6 +36,16 @@ window.Agg = (function () {
 			return retArr;
 		},
 
+		/**
+		 * Loop through a dataset to calculate the sum for a given column. Provide
+		 * and array of column names to group the data by.
+		 * 
+		 * @param  {Array[object]} 	data   					Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		sumCol   				Column to sum
+		 * @param  {Array[String]} 	group  					An array of column names in the format of a string
+		 * @param  {Boolean} 								internal Whether the function is being called internally or not
+		 * @return {Array[object] || map<String> = Sum}     Depending on if it is internal call or not, this function will return an Array of objects or a map
+		 */
 		sum: function(data, sumCol, group, internal) {
 			var map = new Map();
 			for (var i = 0; i < data.length; i++) {
@@ -64,6 +83,15 @@ window.Agg = (function () {
 			return map;
 		},
 
+		/**
+		 * Count the number of occurences of a set of values. Can be grouped in order to specify
+		 * the values being searched for.
+		 * 
+		 * @param  {Array[object]} 	data   					Array of objects. Fields in objects are the columns from dataset
+		 * @param  {Array[String]} 	group  					An array of column names in the format of a string
+		 * @param  {Boolean} 								internal Whether the function is being called internally or not
+		 * @return {Array[object] || map<String> = Sum}     Depending on if it is internal call or not, this function will return an Array of objects or a map
+		 */
 		count: function (data, group, internal) {
 			var map = new Map(); //Map of col1 to total counts
 			var size = group.length;
@@ -100,54 +128,72 @@ window.Agg = (function () {
 			}
 		},
 
+		/**
+		 * Find the maximum set of values based on a specific column. Allows the grouping of elements if desired.
+		 * 
+		 * @param  {Array[object]} 	data   		Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		maxCol   	Column to find the max in
+		 * @param  {Array[String]} 	group  		An array of column names in the format of a string that will be used to group by
+		 * @return {Array[object]}				An array of objects containing the Maximum set of values for the grouped data
+		 */
 		max: function(data, maxCol, group) {
 			return maxMin(data, maxCol, group, true);
 		},
 
+		/**
+		 * Find the Minimum set of values based on a specific column. Allows the grouping of elements if desired.
+		 * 
+		 * @param  {Array[object]} 	data   		Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		minCol   	Column to find the Min in
+		 * @param  {Array[String]} 	group  		An array of column names in the format of a string that will be used to group by
+		 * @return {Array[object]}				An array of objects containing the minimum set of values for the grouped data
+		 */
 		min: function(data, minCol, group) {
 			return maxMin(data, minCol, group, false);
 		},
 
+		/**
+		 * Find the minimum and the maximum of a dataset based on the column to search through
+		 * 
+		 * @param  {Array[object]} 	data 	Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		col  	String of column to find the min and max of
+		 * @return {Array[min, max]}      	An array of numbers. 0=Min 1=Max	
+		 */
 		range: function (data, col) {
-			//var map = new Map();
-
 			var max, min;
 			for (var i = 0; i < data.length; i++) {
 				var row = data[i];
-				if (i == 0) {
+				if (i == 0) { //Set the initial values for max and min
 					max = min = row[col];
 				}
-				//console.log(data);
-				
-				// var key = row[group[0]];
-				// for(var j = 1; j < group.length; j++){
-				// 	key += "_" + row[group[j]];
-				// }
 
-				// if (map.has(key)) {
-				// 	map.set(key, parseInt(row[col]));
-				// } else {
-				// 	map.set(key, parseInt(row[col]));
-				// }
-
-				//var currVal = map.get(key);
-				if (max < row[col]) {
+				if (max < row[col]) { //If max is less than current reset
 					max = parseInt(row[col]);
 				}
-				if (min > row[col]) {
+				if (min > row[col]) { //If min is greater than current reset
 					min = parseInt(row[col]);
 				}
 			}
 			return [min, max];
 		},
 
-		//Direction is a string of "asc" or "desc"
+		/**
+		 * Sort the rows in the dataset based on a column and the direction you would like to sort by.
+		 * Works on number and strings.
+		 *
+		 * Defaults to Descending
+		 * 
+		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
+		 * @param  {String} 		sortCol   
+		 * @param  {String} 		direction 	Accepts "asc" to sort in an Ascending style or "desc" to sort Descending.
+		 * @return {Array[object]}           	Array of objects. Fields in objects are the columns from dataset
+		 */
 		sort: function(data, sortCol, direction) {
 			var dataCopy = data.slice(); //Creates a copy of the data
-			if (!direction) {
+			if (!direction) { //If direction is not set then make it an empty string
 				direction = "";
 			}
-			if (direction.toLowerCase() == "asc") {
+			if (direction.toLowerCase() == "asc") { //If Ascending
 				dataCopy.sort(function(a,b) {
 					var aVal = a[sortCol];
 					var bVal = b[sortCol];
@@ -159,7 +205,7 @@ window.Agg = (function () {
 				    if(aVal > bVal) return 1;
 				    return 0;
 				});
-			} else { //"desc"
+			} else { // if Descending or just not set
 				dataCopy.sort(function(a,b) {
 					var aVal = a[sortCol];
 					var bVal = b[sortCol];
@@ -175,6 +221,16 @@ window.Agg = (function () {
 			return dataCopy;
 		},
 
+		/**
+		 * Sort the rows in the dataset based on a column and the direction you would like to sort by.
+		 * Works on number and strings.
+		 *
+		 * Defaults to Descending
+		 * 
+		 * @param  {Array[object]} 	data 	Array of objects. Fields in objects are the columns from dataset
+		 * @param  {Number} 		limit	The number of rows you want to keep.
+		 * @return {Array[object]} 			An array of objects. Fields in objects are the columns from dataset. Number of objects based on "limit"
+		 */ 
 		take: function (data, limit) {
 			var copy = [];
 			for (var i = 0; i < limit; i++){
@@ -183,12 +239,16 @@ window.Agg = (function () {
 			return copy;
 		},
 
-		/*
-			data = Array list of objects
-			filterCol = Array of String values for what columns to check against
-			filterValue = Array of values to compare with the columns. 
-
-			Columns and values need to be aligned 1to1 and right now columnes cannot be repeated for different values. Currently an all or nothing situation.
+		/**
+		 * Loops through the dataset and searches for exact matching data between the filterCol and filerValue parameters.
+		 * Only keeps rows which meet all the filter values exactly.
+		 *
+		 * filterCol and filterValue need to match in column to value positioning within the array.
+		 * 
+		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
+		 * @param  {Array[String]} filterCol   	Array of column names to match with the values
+		 * @param  {Array[values]} filterValue 	Array of values to check for in each provided column
+		 * @return {Array[objects]}            	Array of objects. Fields in objects are the columns from dataset
 		 */
 		filter: function (data, filterCol, filterValue){
 			var filterData = [];
@@ -213,6 +273,8 @@ window.Agg = (function () {
 			return filterData;
 		}
 	};
+
+	/*Functions to be used internally only*/
 
 	//Helper function for the Min and Max functions
 	function maxMin(data, col, group, max) {
