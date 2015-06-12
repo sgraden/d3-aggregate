@@ -143,20 +143,46 @@ window.Agg = (function () {
 			return [min, max];
 		},
 
-		sortAscending: function(data, sortCol) {
-
-			data.sort(function(a,b) {
-    			return a[sortCol] - b[sortCol];
-			});
-			return data;
+		//Direction is a string of "asc" or "desc"
+		sort: function(data, sortCol, direction) {
+			var dataCopy = data.slice(); //Creates a copy of the data
+			if (!direction) {
+				direction = "";
+			}
+			if (direction.toLowerCase() == "asc") {
+				dataCopy.sort(function(a,b) {
+					var aVal = a[sortCol];
+					var bVal = b[sortCol];
+					if (typeof aVal == "string") { //Important to match caps
+						aVal = aVal.toLowerCase();
+						bVal = bVal.toLowerCase();
+					}
+					if(aVal < bVal) return -1;
+				    if(aVal > bVal) return 1;
+				    return 0;
+				});
+			} else { //"desc"
+				dataCopy.sort(function(a,b) {
+					var aVal = a[sortCol];
+					var bVal = b[sortCol];
+					if (typeof aVal == "string") { //Important to match caps
+						aVal = aVal.toLowerCase();
+						bVal = bVal.toLowerCase();
+					}
+					if(aVal > bVal) return -1;
+				    if(aVal < bVal) return 1;
+				    return 0;
+				});
+			}
+			return dataCopy;
 		},
 
-		sortDescending: function(data, sortCol) {
-			data.sort(function(a,b) {
-				return b[sortCol] - a[sortCol];
-			});
-			return data;
-		},
+		//sortDescending: function(data, sortCol) {
+		//	data.sort(function(a,b) {
+		//		return b[sortCol] - a[sortCol];
+		//	});
+		//	return data;
+		//},
 
 		take: function (data, limit) {
 			var copy = [];

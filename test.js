@@ -14,15 +14,16 @@
 			console.log(Agg.count(tennis, "Name"));
 			console.log(Agg.count(tennis, "Name", "federer r.")); */
 			// console.log(Agg.review(tennis, "Winner", "WPts", "Matosevic M."));
-			console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
-			console.log(Agg.max(tennis, "WPts", ["Winner"]));
-			console.log(Agg.count(tennis, ["Winner"]));
+			//console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
+			//console.log(Agg.max(tennis, "WPts", ["Winner"]));
+			//console.log(Agg.count(tennis, ["Winner"]));
 			var winCount = Agg.count(tennis, ["Winner", "Gender"]);
-			console.log(Agg.max(winCount, "Count", ["Winner"]));
-			console.log(Agg.range(tennis, "WRank", ["Winner"]));
-			console.log(Agg.sortDescending(tennis, "WRank"));
-			var sortedWinCount = Agg.sortDescending(winCount, "Count");
-			console.log(sortedWinCount);
+			//console.log(Agg.max(winCount, "Count", ["Winner"]));
+			//console.log(Agg.range(tennis, "WRank", ["Winner"]));
+			console.log("sort", Agg.sort(tennis, "WPts", "desc"));
+			console.log(tennis);
+			var sortedWinCount = Agg.sort(winCount, "Count", "desc");
+			console.log("count sort", sortedWinCount);
 			var topTen = Agg.take(sortedWinCount, 10);
 			console.log(topTen);
 
