@@ -196,7 +196,8 @@ window.Agg = (function () {
 			var filterData = data;
 
 			for (var i = 0; i < data.length; i++) {
-				if (data[i][filterCol] == filterValue) {
+				console.log(data[i][filterCol]);
+				if (data[i]&& data[i][filterCol] && data[i][filterCol] == filterValue) {
 					filterData.push(data[filterCol]);
 				}
 			}
