@@ -1,0 +1,78 @@
+//Average the original list and group by the Winner name, the tournament, and the surface type
+var avgPoints = Agg.avg(tennis, "WPts", ["Winner", "Tournament", "Surface"]);
+/* 
+Example:
+	Avg. WPts: 711
+	Surface: "Grass"
+	Tournament: "Australian Open"
+	Winner: "Ebden M."
+*/
+//Filter the dataset to only rows including "Hard" for surface type
+var filteredAvg = Agg.filter(avgPoints, ["Surface"], ["Hard"]);
+/* 
+Example:
+	Avg. WPts: 1110
+	Surface: "Hard"
+	Tournament: "Australian Open"
+	Winner: "Mayer F."
+*/
+//Shrink the list to 10 and sort it Alphabetically by winner name
+var sortedAvgSmall = Agg.sort(Agg.take(filteredAvg, 10), "Winner", "ASC");
+'''
+
+Documentation of functions:
+Avg O(nm)
+Loop through a dataset (Array of Objects with columns as fields) to calculate the average value for a column. Provide the other columns to group by. Will return an Array of objects in the same layout as given	
+param  {Array[object]}    data    Array of objects. Fields in objects are the columns from dataset
+param {String}            avgCol  The column that will be averaged
+param {Array[String]}     group   An array of column names
+return {Array[object]}            An array of objects with the grouped and average column as fields.  
+	
+Sum O(nm)
+Loop through a dataset to calculate the sum for a given column. Provide an array of column names to group the data by.
+param  {Array[object]}  data        Array of objects. Fields in objects are the columns from dataset
+param {String}          sumCol      Column to be summed
+param {Array[String]}   group       An array of column names in the format of a 
+param {Boolean}         internal    Whether the function is being called internally or not. Changes what will be returned.
+return {Array[object] || map<String> = Sum}     Depending on if it is internal call or not, this function will return an Array of objects or a map
+
+Count O(nm)
+Count the number of occurrences of a set of values. Can be grouped in order to specify the values being searched for.
+param  {Array[object]}  data        Array of objects. Fields in objects are the columns from dataset
+param {Array[String]}   Group       An array of column names in the format of a 
+param {Boolean}         internal    Whether the function is being called internally or not. Changes what will be returned.
+return {Array[object]}              An array of objects with the grouped columns and count as fields
+
+Max/Min O(nm)
+Find the maximum or minimum set of values based on a specific column. Allows the grouping of elements if desired.	
+param  {Array[object]}    data            Array of objects. Fields in objects are the columns from dataset
+param {String}            maxCol/minCol   Column to find the max or min in
+param {Array[String]}     group           An array of column names in the format of a 
+return {Array[object]}                    An array of objects containing the Maximum or minimum set of values for the grouped data
+
+Range O(n)
+Find the minimum and the maximum of a dataset based on the column to search through
+param  {Array[object]}    data  Array of objects. Fields in objects are the columns from dataset
+param {String}            col   String of column to find the min and max of
+return {Array[min, max]}        An array of numbers. 0=Min 1=Max	
+
+Sort O(n)
+Sort the rows in the dataset based on a column and the direction you would like to sort by. Works on number and strings.
+param  {Array[object]}  data        Array of objects. Fields in objects are the columns from dataset
+param {String}          sortCol     String of column name to sort by
+param  {String}         direction   Accepts "asc" to sort in an Ascending style or "desc" to sort Descending.
+return {Array[object]}              An array of sorted objects.
+
+Take O(n)
+Reduce the amount of rows in your dataset. Simply grabs the top rows of the dataset and returns a new array of them. If limit is greater than the length of data then will return original data.
+param  {Array[object]}  data        Array of objects. Fields in objects are the columns from dataset
+param {Number}          limit       The number of rows to keep
+return {Array[object]}              An array of objects. Fields in objects are the columns from dataset. Number of objects based on "limit".
+
+Filter O(nm)
+Loops through the dataset and searches for exact matching data between the filterCol and filerValue parameters. Only keeps rows which meet all the filter values exactly. filterCol and filterValue need to match column to value positioning within the arrays.
+param  {Array[object]}    data              Array of objects. Fields in objects are the columns from dataset
+param {Array[String]}     filterCol         Array of column names to match with the values
+param {Array[values]}     filterValue       Array of values to check for in each provided column
+return {Array[object]}                      Array of objects. Fields in objects are the columns from dataset
+
