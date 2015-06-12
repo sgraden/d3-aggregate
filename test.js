@@ -21,8 +21,7 @@
 			var sortedWinCount = Agg.sort(winCount, "Count", "desc");
 			var topTen = Agg.take(sortedWinCount, 10);
 			console.log(topTen);
-			console.log("hello");
-			console.log(Agg.filter(winCount, "Gender", "Female"));
+			console.log(Agg.filter(winCount, ["Gender", "Count"], ["Male", 15]));
 
 var margin = {top: 20, right: 20, bottom: 30, left: 70};
     var w = 960 - margin.left - margin.right;

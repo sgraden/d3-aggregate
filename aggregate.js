@@ -175,13 +175,6 @@ window.Agg = (function () {
 			return dataCopy;
 		},
 
-		//sortDescending: function(data, sortCol) {
-		//	data.sort(function(a,b) {
-		//		return b[sortCol] - a[sortCol];
-		//	});
-		//	return data;
-		//},
-
 		take: function (data, limit) {
 			var copy = [];
 			for (var i = 0; i < limit; i++){
@@ -190,14 +183,33 @@ window.Agg = (function () {
 			return copy;
 		},
 
-		filter: function (data, filterCol, filterValue){
-			var filterData = data.slice();
+		/*
+			data = Array list of objects
+			filterCol = Array of String values for what columns to check against
+			filterValue = Array of values to compare with the columns. 
 
-			for (var i = 0; i < data.length; i++) {
-				if (data[i] && data[i][filterCol] && data[i][filterCol] == filterValue) {
-					filterData.push(data[filterCol]);
+			Columns and values need to be aligned 1to1 and right now columnes cannot be repeated for different values. Currently an all or nothing situation.
+		 */
+		filter: function (data, filterCol, filterValue){
+			var filterData = [];
+
+			for (var i = 0; i < data.length; i++) { //Loop through data
+				var row = data[i];
+				var saveVal = true;
+				for (var j = 0; j < filterCol.length; j++) { //For each data, loop through columns and test against same value
+					var col = filterCol[j];
+					if (row && row[col]) { //If the row exists and row at col exists
+						var allowVal = filterValue[j];
+						if (row[col] != allowVal) { //if any column does not pass then don't save
+							saveVal = false;
+						}
+					}
+				}
+				if (saveVal) { //If all filters passed then save
+					filterData.push(row);
 				}
 			}
+
 			return filterData;
 		},
 
