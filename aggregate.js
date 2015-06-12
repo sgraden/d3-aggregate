@@ -191,7 +191,7 @@ window.Agg = (function () {
 		},
 
 		filter: function (data, filterCol, filterValue){
-			var filterData = data;
+			var filterData = data.split();
 
 			for (var i = 0; i < data.length; i++) {
 				if (data[i] && data[i][filterCol] && data[i][filterCol] == filterValue) {
