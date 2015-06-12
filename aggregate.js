@@ -110,12 +110,37 @@ window.Agg = (function () {
 			return maxMin(data, minCol, group, false);
 		},
 
-		rangeMax: function (data, maxCol, group) {
-			return rangeMaxMin(data, maxCol, group, true);
-		},
+		range: function (data, col) {
+			//var map = new Map();
 
-		rangeMin: function(data, minCol, group) {
-			return rangeMaxMin(data, minCol, group, false);
+			var max, min;
+			for (var i = 0; i < data.length; i++) {
+				var row = data[i];
+				if (i == 0) {
+					max = min = row[col];
+				}
+				//console.log(data);
+				
+				// var key = row[group[0]];
+				// for(var j = 1; j < group.length; j++){
+				// 	key += "_" + row[group[j]];
+				// }
+
+				// if (map.has(key)) {
+				// 	map.set(key, parseInt(row[col]));
+				// } else {
+				// 	map.set(key, parseInt(row[col]));
+				// }
+
+				//var currVal = map.get(key);
+				if (max < row[col]) {
+					max = parseInt(row[col]);
+				}
+				if (min > row[col]) {
+					min = parseInt(row[col]);
+				}
+			}
+			return [min, max];
 		},
 
 		sortAscending: function(data, sortCol) {
@@ -151,40 +176,6 @@ window.Agg = (function () {
 
 
 	};
-
-	function rangeMaxMin(data, col, group, max){
-		var map = new Map();
-		var value = 0;
-		for (var i = 0; i < data.length; i++) {
-			var row = data[i];
-			
-			var key = row[group[0]];
-			for(var j = 1; j < group.length; j++){
-				key += "_" + row[group[j]];
-			}
-
-
-			if (map.has(key)) {
-				var currVal = map.get(key);
-				//console.log("curr: " + currVal);
-				if (max && currVal < row[col]) {
-					map.set(key, parseInt(row[col]));
-					value = parseInt(row[col]);
-				} else if (!max && currVal > row[col]) { //If max == false
-					map.set(key, parseInt(row[col]));
-
-					value = parseInt(row[col]);
-				}
-			} else {
-				map.set(key, parseInt(row[col]));
-				value = parseInt(row[col]);
-			}
-		}
-
-		return value;
-
-	}
-
 
 	//Helper function for the Min and Max functions
 	function maxMin(data, col, group, max) {

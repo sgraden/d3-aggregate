@@ -9,14 +9,10 @@
 				return console.log(error);
 			}
 			console.log(tennis);
-			/*console.log(Agg.avg(tennis, "Name", "Wins"));
-			console.log(Agg.sum(tennis, "Name", "Wins"));
-			console.log(Agg.count(tennis, "Name"));
-			console.log(Agg.count(tennis, "Name", "federer r.")); */
-			// console.log(Agg.review(tennis, "Winner", "WPts", "Matosevic M."));
-			console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
-			console.log(Agg.rangeMax(tennis, "WRank", ["Winner"]));
-			console.log(Agg.sort(tennis, "WRank"));
+			//console.log(Agg.avg(tennis, "WPts", ["Winner", "Series", "Surface"]));
+			//console.log(Agg.sort(tennis, "WRank"));
+			var avg = Agg.avg(tennis, "WPts", ["Winner"]);
+			console.log(Agg.range(avg, "Avg. WPts"));
 		});
 	});
 })();
