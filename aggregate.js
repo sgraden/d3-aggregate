@@ -2,17 +2,17 @@
 window.Agg = (function () {
 	function Agg () {
 	}
-		    
+
 	var agg = {
 		/**
-		 * Loop through a dataset (Array of Objects with columns as fields) 
+		 * Loop through a dataset (Array of Objects with columns as fields)
 		 * to calculate the average value for a column. Provide the other
 		 * columns to group by. Will return an Array of objects in the same layout as given
-		 * 
+		 *
 		 * @param  {Array[object]} 	data   	Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		avgCol 	The column that will be averaged
 		 * @param  {Array[String]} 	group  	An array of column names in the format of a string
-		 * @return {Array[object]}  		An array of objects with the grouped and average column as fields.      
+		 * @return {Array[object]}  		An array of objects with the grouped and average column as fields.
 		 */
 		avg: function(data, avgCol, group) {
 			var avgMap = this.sum(data, avgCol, group, true);
@@ -22,7 +22,7 @@ window.Agg = (function () {
 			for (var currKey of avgMap.keys()) {
 				var count = countMap.get(currKey);
 				var sum = avgMap.get(currKey);
-				
+
 				//Create an Array of Objs
 				var obj = {};
 				var keySplit = currKey.split("_");
@@ -39,7 +39,7 @@ window.Agg = (function () {
 		/**
 		 * Loop through a dataset to calculate the sum for a given column. Provide
 		 * an array of column names to group the data by.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data   			Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		sumCol  		Column to sum
 		 * @param  {Array[String]} 	group  			An array of column names in the format of a string
@@ -61,7 +61,7 @@ window.Agg = (function () {
 				} else {
 					map.set(key, parseInt(row[sumCol]));
 				}
-			} 
+			}
 
 			//Create an Array of objects
 			var objArr = [];
@@ -86,7 +86,7 @@ window.Agg = (function () {
 		/**
 		 * Count the number of occurences of a set of values. Can be grouped in order to specify
 		 * the values being searched for.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data   					Array of objects. Fields in objects are the columns from dataset
 		 * @param  {Array[String]} 	group  					An array of column names in the format of a string
 		 * @param  {Boolean} 								internal Whether the function is being called internally or not
@@ -100,14 +100,14 @@ window.Agg = (function () {
 				var key = row[group[0]];
 				for (var j = 1; j < size; j++){
 					var rowVal = row[group[j]];
-					key += ("_" + rowVal);				
+					key += ("_" + rowVal);
 				}
 				if (map.has(key)) {
 					var mapVal = map.get(key);
 					map.set(key, mapVal + 1);
 				} else {
 					map.set(key, 1);
-				}		
+				}
 			}
 
 			//Convert to array of objects
@@ -130,7 +130,7 @@ window.Agg = (function () {
 
 		/**
 		 * Find the maximum set of values based on a specific column. Allows the grouping of elements if desired.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data   		Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		maxCol   	Column to find the max in
 		 * @param  {Array[String]} 	group  		An array of column names in the format of a string that will be used to group by
@@ -142,7 +142,7 @@ window.Agg = (function () {
 
 		/**
 		 * Find the Minimum set of values based on a specific column. Allows the grouping of elements if desired.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data   		Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		minCol   	Column to find the Min in
 		 * @param  {Array[String]} 	group  		An array of column names in the format of a string that will be used to group by
@@ -154,10 +154,10 @@ window.Agg = (function () {
 
 		/**
 		 * Find the minimum and the maximum of a dataset based on the column to search through
-		 * 
+		 *
 		 * @param  {Array[object]} 	data 	Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		col  	String of column to find the min and max of
-		 * @return {Array[min, max]}      	An array of numbers. 0=Min 1=Max	
+		 * @return {Array[min, max]}      	An array of numbers. 0=Min 1=Max
 		 */
 		range: function (data, col) {
 			var max, min;
@@ -182,7 +182,7 @@ window.Agg = (function () {
 		 * Works on number and strings.
 		 *
 		 * Defaults to Descending
-		 * 
+		 *
 		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
 		 * @param  {String} 		sortCol   	String of column name to sort by
 		 * @param  {String} 		direction 	Accepts "asc" to sort in an Ascending style or "desc" to sort Descending.
@@ -223,11 +223,11 @@ window.Agg = (function () {
 
 		/**
 		 * Reduce the amount of rows in your dataset. Simply grabs the top rows of the dataset and returns a new array of them. If limit is greater than the length of data then will return original data.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data 	Array of objects. Fields in objects are the columns from dataset
 		 * @param  {Number} 		limit	The number of rows you want to keep.
 		 * @return {Array[object]} 			An array of objects. Fields in objects are the columns from dataset. Number of objects based on "limit"
-		 */ 
+		 */
 		take: function (data, limit) {
 			if (limit < data.length) {
 				var copy = [];
@@ -238,7 +238,7 @@ window.Agg = (function () {
 			} else { //IF the user asks for more rows then juest return the old array
 				return data;
 			}
-			
+
 		},
 
 		/**
@@ -246,7 +246,7 @@ window.Agg = (function () {
 		 * Only keeps rows which meet all the filter values exactly.
 		 *
 		 * filterCol and filterValue need to match column to value positioning within the arrays.
-		 * 
+		 *
 		 * @param  {Array[object]} 	data 		Array of objects. Fields in objects are the columns from dataset
 		 * @param  {Array[String]} filterCol   	Array of column names to match with the values
 		 * @param  {Array[values]} filterValue 	Array of values to check for in each provided column
@@ -283,7 +283,7 @@ window.Agg = (function () {
 		var map = new Map();
 		for (var i = 0; i < data.length; i++) {
 			var row = data[i];
-			
+
 			var key = row[group[0]];
 			for(var j = 1; j < group.length; j++){
 				key += "_" + row[group[j]];
